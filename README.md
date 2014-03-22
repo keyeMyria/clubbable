@@ -8,13 +8,20 @@ Requirements
 
 Python library requirements are listed in requirements.txt.
 
-clubbable's importmdb.py utility also requires [mdbtools][1] to import data from
-a Microsoft Access database. You may be able to install it from your operating
-system's repository. e.g.
+If you want to import data from a Microsoft Access database, *clubbable*'s
+importmdb.py utility requires [mdbtools][1]. It is available from the
+[mdbtools homepage][1].
+
+You might also be able to install it from your operating system's software
+repository. e.g.
 
     $ sudo apt-get install mdbtools
 
-It is available from the [mdbtools homepage][1].
+
+Documentation
+-------------
+
+Further documentation can be found in the "doc" directory.
 
 
   [1]: http://mdbtools.sourceforge.net/
