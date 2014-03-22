@@ -91,3 +91,10 @@ TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 # clubbable-specific settings
 # Title by which to refer to members, e.g. "Rotarian". None if not applicable
 MEMBER_TITLE = 'Owl'
+
+
+# Import settings for local deployment, if applicable
+try:
+    from settings_local import *
+except ImportError:
+    pass
