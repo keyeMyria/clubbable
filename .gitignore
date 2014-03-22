@@ -7,6 +7,9 @@ settings_local.py
 # Virtualenv
 venv
 
+# Generate documentation
+doc/_build
+
 # Installer logs
 pip-log.txt
 
