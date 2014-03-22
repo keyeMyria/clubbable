@@ -5,7 +5,7 @@ Documentation for Administrators
 image galleries for members to browse.
 
 If you currently manage club membership using a Microsoft Access database, you
-may be able[#]_ to import your data into *clubbable*.
+may be able [#]_ to import your data into *clubbable*.
 
 
 .. [#] The database import tool will probably need to be customised for your
