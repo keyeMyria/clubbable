@@ -1,14 +1,14 @@
 """
-Member, Guest and Event classes form the core of clubbable.
+Member, Guest and Event classes form the core of *clubbable*.
 
 The class definitions include a field name in comments after each field. This
 corresponds the the field in the Microsoft Access database that is imported to
-populate clubbable.
+populate *clubbable*.
 
 The import tool is src/clubbable/dbtools/importmdb.py. It is specific to the
-club for which clubbable is written, but should be easy to customise for other
-clubs, or simply ignored if the club does not have an existing databased stored
-in Microsoft Access.
+club for which *clubbable* is written, but should be easy to customise for
+other clubs, or simply ignored if the club does not use a Microsoft Access
+database.
 
 """
 from __future__ import unicode_literals
@@ -111,6 +111,9 @@ post_save.connect(Member.sync_email, sender=Member)
 
 
 class Guest(models.Model):
+    """
+    Guest and Member instances are associated with gallery images.
+    """
     id = models.PositiveIntegerField(primary_key=True,
                                      editable=False)  # GuestID Int8,
     date_of_listing = models.DateField()  # DateOfListing Timestamp,
@@ -133,7 +136,10 @@ class Guest(models.Model):
         return ' '.join([self.title, self.first_name, self.last_name])
 
 
-class Event(models.Model):
+class Meeting(models.Model):
+    """
+    Gallery images may be associated with an Meeting.
+    """
     id = models.PositiveIntegerField(primary_key=True,
                                      editable=False)  # EventNum Int8,
     year = models.PositiveIntegerField()  # Year Int8,

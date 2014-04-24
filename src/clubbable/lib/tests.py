@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from datetime import date
 from django.conf import settings
 from django.test import TestCase
-from clubbable.lib.models import Member, Guest, Event
+from clubbable.lib.models import Member, Guest, Meeting
 
 
 class TestMember(TestCase):
@@ -48,14 +48,14 @@ class TestGuest(TestCase):
         assert string == 'Mr Eric Idle'
 
 
-class TestEvent(TestCase):
+class TestMeeting(TestCase):
 
     def test_unicode(self):
-        event = Event(
+        meeting = Meeting(
             year=2013,
             month=2,
             date=date(2014, 3, 22),
             name='Meeting'
         )
-        string = unicode(event)
+        string = unicode(meeting)
         assert string == 'Meeting (March 2014)'
