@@ -49,19 +49,20 @@ class Member(models.Model):
     # WorkTelephone
     # MobileTelephone
     email = models.CharField(max_length=150, blank=True)  # EmailAddress
-    send_emails = models.BooleanField()  # ReceivesNoticesElectronically
+    send_emails = models.BooleanField(default=False)  # ReceivesNoticesElectronically
     # Proposer
     # Seconder
     # SpouseName
     # PreferredFax
     # AddressCategory
-    qualification_art = models.BooleanField()  # Art
-    qualification_drama = models.BooleanField()  # Drama
-    qualification_literature = models.BooleanField()  # Literature
-    qualification_music = models.BooleanField()  # Music
-    qualification_science = models.BooleanField()  # Science
+    qualification_art = models.BooleanField(default=False)  # Art
+    qualification_drama = models.BooleanField(default=False)  # Drama
+    qualification_literature = models.BooleanField(default=False)  # Literature
+    qualification_music = models.BooleanField(default=False)  # Music
+    qualification_science = models.BooleanField(default=False)  # Science
     hon_life_member = models.BooleanField(
-        verbose_name='Honorary life member')  # HonLifeMember
+        verbose_name='Honorary life member',
+        default=False)  # HonLifeMember
     canonisation_date = models.DateField(null=True,
                                          blank=True)  # CanonisationDate
     # Category
@@ -121,11 +122,11 @@ class Guest(models.Model):
     first_name = models.CharField(max_length=100)  # GuestFirstName Char (100),
     initials = models.CharField(max_length=100)  # GuestInitials Char (100),
     title = models.CharField(max_length=100)  # GuestTitle Char (100),
-    admitted_to_club = models.BooleanField()  # AdmittedToOwldom Bool,
+    admitted_to_club = models.BooleanField(default=False)  # AdmittedToOwldom Bool,
     date_admitted = models.DateField(null=True,
                                      blank=True)  # DateAdmitted Timestamp,
     member = models.ForeignKey(Member, null=True, blank=True)  # MemberNum Int8,
-    delisted = models.BooleanField()  # Delisted Bool
+    delisted = models.BooleanField(default=False)  # Delisted Bool
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

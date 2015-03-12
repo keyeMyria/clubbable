@@ -1,0 +1,2 @@
+Attest
+django-attest==0.10.0
