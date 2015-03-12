@@ -9,15 +9,13 @@ welcome to `fork the project on GitHub`_.
 Installation
 ------------
 
-Installation for production has fewer requirements than for development. For
-production you just need the requirements given in requirements.txt. ::
+For a production installation you just need the requirements given in
+requirements.txt. ::
 
     $ pip install -r requirements.txt
 
-For development, you need Attest >= 0.6, which is not yet available on PyPI.
-Use GitHub. And install the rest of the development requirements. ::
+For development, you need to run the following command as well. ::
 
-    $ pip install git+https://github.com/dag/attest.git
     $ pip install -r requirements_dev.txt
 
 

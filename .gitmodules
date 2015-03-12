@@ -1,0 +1,6 @@
+[submodule "submodules/attest"]
+	path = submodules/attest
+	url = git@github.com:dag/attest.git
+[submodule "submodules/django-attest"]
+	path = submodules/django-attest
+	url = git@github.com:bradleyayers/django-attest.git

@@ -84,7 +84,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # Settings for django-attest
-# TEST_RUNNER = "django_attest.Runner"
+TEST_RUNNER = "django_attest.Runner"
 
 # clubbable-specific settings
 # Title by which to refer to members, e.g. "Rotarian". None if not applicable
