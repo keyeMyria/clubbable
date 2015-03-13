@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from datetime import date
 from django.conf import settings
 from django.test import TestCase
-from clubbable.lib.models import Member, Guest, Meeting
+from club.models import Member, Guest, Meeting
 
 
 class TestMember(TestCase):
