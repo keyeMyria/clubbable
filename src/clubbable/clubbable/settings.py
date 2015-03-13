@@ -37,9 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_nose',
-
-    'clubbable.lib'
+    'lib'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,9 +82,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
 STATIC_URL = '/static/'
-
-# Settings for django-nose
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
 
 # clubbable-specific settings
 # Title by which to refer to members, e.g. "Rotarian". None if not applicable
