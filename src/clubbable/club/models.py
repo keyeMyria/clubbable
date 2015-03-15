@@ -73,7 +73,13 @@ class Member(models.Model):
     class Meta:
         ordering = ('last_name', 'familiar_name')
 
+    def __str__(self):
+        return self.get_full_name()
+
     def __unicode__(self):
+        return self.get_full_name()
+
+    def get_full_name(self):
         if settings.MEMBER_TITLE:
             return ' '.join([settings.MEMBER_TITLE,
                              self.familiar_name,

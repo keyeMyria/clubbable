@@ -87,6 +87,12 @@ STATIC_URL = '/static/'
 # Title by which to refer to members, e.g. "Rotarian". None if not applicable
 MEMBER_TITLE = 'Owl'
 
+# Mail settings for outgoing mail
+SMTP_SERVER = 'localhost'
+SMTP_PORT = 0  # 0 = Default
+FROM_ADDRESS = 'The Club Webmaster <webmaster@example.com>'
+REPLY_TO_ADDRESS = 'The Club Secretary <secretary@example.com>'  # Optional
+BOUNCE_ADDRESS = '<bounce@example.com>'  # Optional
 
 # Import settings for local deployment, if applicable
 try:
