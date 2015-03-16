@@ -37,7 +37,7 @@ class MessageTemplate(models.Model):
     def __unicode__(self):
         return self.subject
 
-    def get_subject_or_attachments(self):
+    def get_subject_or_notices(self):
         if self.notices:
-            return ', '.join(['%s' % a for a in self.notices])
+            return ', '.join(['%s' % n for n in self.notices])
         return self.subject
