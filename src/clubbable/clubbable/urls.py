@@ -6,6 +6,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', 'website.views.dashboard', name='dashboard'),
 
-    url('^accounts/', include('django.contrib.auth.urls')),
+    url(r'^accounts/', include('django.contrib.auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
