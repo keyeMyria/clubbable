@@ -39,6 +39,7 @@ INSTALLED_APPS = (
 
     'club',
     'notices',
+    'website',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,6 +54,8 @@ MIDDLEWARE_CLASSES = (
 ROOT_URLCONF = 'clubbable.urls'
 
 WSGI_APPLICATION = 'clubbable.wsgi.application'
+
+TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 
 # Database

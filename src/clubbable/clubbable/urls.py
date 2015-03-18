@@ -4,9 +4,8 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'clubbable.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^$', 'website.views.dashboard', name='dashboard'),
 
+    url('^accounts/', include('django.contrib.auth.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )
