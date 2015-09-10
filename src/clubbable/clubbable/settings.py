@@ -37,8 +37,11 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'imagekit',
+
     'club',
     'docs',
+    'galleries',
     'website',
 )
 
@@ -81,15 +84,16 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
 STATIC_URL = '/static/'
+
+# Location of uploaded images
+UPLOAD_ROOT = '/usr/upload/'
 
 # clubbable-specific settings
 # Title by which to refer to members, e.g. "Rotarian". None if not applicable
-MEMBER_TITLE = 'Owl'
+MEMBER_TITLE = 'Captain'
 
 # The absolute path to the mdb-export command
 MDB_EXPORT_CMD = '/usr/bin/mdb-export'
