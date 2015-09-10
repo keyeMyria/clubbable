@@ -69,8 +69,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'legacy': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'club_db',
+        'USER': 'club_user',
+        'PASSWORD': 'club_secret',
+        'HOST': '',
+        'PORT': '',
     }
 }
+
+DATABASE_ROUTERS = ['import_legacy.router.LegacyDbRouter']
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
@@ -98,6 +108,9 @@ MEMBER_TITLE = 'Captain'
 
 # The absolute path to the mdb-export command
 MDB_EXPORT_CMD = '/usr/bin/mdb-export'
+
+# Path to static files from legacy site
+LEGACY_FILES_PATH = '~/src/owlclub/lib/var'
 
 # Mail settings for outgoing mail
 SMTP_SERVER = 'localhost'

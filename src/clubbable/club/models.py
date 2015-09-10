@@ -13,9 +13,22 @@ database.
 """
 from __future__ import unicode_literals
 from django.conf import settings
+from django.contrib.auth.models import User
 from django.core.mail import mail_admins
 from django.db import models
 from django.db.models.signals import post_save
+from galleries.models import Image
+
+
+class GetOrNoneManager(models.Manager):
+    """
+    Adds get_or_none method to objects
+    """
+    def get_or_none(self, **kwargs):
+        try:
+            return self.get(**kwargs)
+        except self.model.DoesNotExist:
+            return None
 
 
 class Member(models.Model):
@@ -69,6 +82,11 @@ class Member(models.Model):
     # ExternalRole1
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    profile_image = models.ForeignKey(Image, null=True, blank=True)
+
+    # Used by import_legacy to find foreign keys
+    objects = GetOrNoneManager()
 
     class Meta:
         ordering = ('last_name', 'familiar_name')
@@ -138,6 +156,8 @@ class Guest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = GetOrNoneManager()
+
     class Meta:
         ordering = ('last_name', 'first_name')
 
@@ -164,6 +184,8 @@ class Meeting(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    objects = GetOrNoneManager()
+
     def __str__(self):
         # Note that the year and month fields are ignored. Just the date field
         # is used. This is because we import the year and month fields, if they
@@ -172,3 +194,30 @@ class Meeting(models.Model):
 
     def __unicode__(self):
         return '{} ({})'.format(self.name, self.date.strftime('%B %Y'))
+
+
+class Profile(models.Model):
+    """Profile table links users with Owls. Users need not be Owls, and Owls
+    need not have an associated user.
+    """
+    user = models.ForeignKey(User, unique=True)
+    # Members can only be associated with one user. Users do not need to be
+    # Members.
+    member = models.ForeignKey(Member, unique=True, null=True, blank=True)
+
+    def __str__(self):
+        if self.member:
+            return '%s (%s)' % (self.user, self.member)
+        return '%s' % self.user
+
+    def __unicode__(self):
+        if self.member:
+            return '%s (%s)' % (self.user, self.member)
+        return '%s' % self.user
+
+
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        profile, created = Profile.objects.get_or_create(user=instance)
+
+post_save.connect(create_profile, sender=User)

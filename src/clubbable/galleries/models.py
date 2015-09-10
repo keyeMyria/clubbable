@@ -11,9 +11,9 @@ fs = FileSystemStorage(location=settings.UPLOAD_ROOT)
 
 
 class Gallery(models.Model):
-    name = models.CharField(max_length=255, blank=True)
-    # favourite_image is the image for this gallery in the list of galleries
-    favourite_image = models.ForeignKey('Image', null=True, blank=True)
+    name = models.CharField(max_length=255)
+    # poster_image is the image for this gallery in the list of galleries
+    poster_image = models.ForeignKey('Image', null=True, blank=True)
 
     def __str__(self):
         return '%s' % self.name
