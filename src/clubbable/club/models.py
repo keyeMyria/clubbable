@@ -87,10 +87,12 @@ class Member(models.Model):
         return ' '.join([self.familiar_name, self.last_name])
 
     def get_formal_name(self):
-        return ' '.join([self.title,
-                         self.initials,
-                         self.last_name,
-                         self.post_title])
+        return ' '.join([
+            self.title,
+            self.initials,
+            self.last_name,
+            self.post_title,
+        ])
 
     @staticmethod
     def sync_email(sender, instance, created, raw, using, update_fields,
@@ -139,6 +141,9 @@ class Guest(models.Model):
     class Meta:
         ordering = ('last_name', 'first_name')
 
+    def __str__(self):
+        return ' '.join([self.title, self.first_name, self.last_name])
+
     def __unicode__(self):
         return ' '.join([self.title, self.first_name, self.last_name])
 
@@ -159,8 +164,11 @@ class Meeting(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __unicode__(self):
+    def __str__(self):
         # Note that the year and month fields are ignored. Just the date field
         # is used. This is because we import the year and month fields, if they
         # are available, for the sake of completeness
+        return '{} ({})'.format(self.name, self.date.strftime('%B %Y'))
+
+    def __unicode__(self):
         return '{} ({})'.format(self.name, self.date.strftime('%B %Y'))

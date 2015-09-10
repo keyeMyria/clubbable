@@ -37,8 +37,8 @@ class DashboardViewTests(TestCase):
                  'password': user['password']})
             # Check login was successful
             self.assertIn('_auth_user_id', self.client.session)
-            self.assertEqual(
-                self.client.session['_auth_user_id'], user['id'])
+            self.assertEqual(int(self.client.session['_auth_user_id']),
+                             user['id'])
 
             response = self.client.get(reverse('dashboard'))
             self.assertEqual(response.status_code, 200)

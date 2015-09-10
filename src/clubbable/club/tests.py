@@ -22,14 +22,15 @@ class TestMember(TestCase):
 
     def test_unicode_with_member_title(self):
         settings.MEMBER_TITLE = 'Rotarian'
-        assert unicode(self.member) == 'Rotarian Michael Palin'
+        self.assertEqual('%s' % self.member, 'Rotarian Michael Palin')
 
     def test_unicode_without_member_title(self):
         settings.MEMBER_TITLE = None
-        assert unicode(self.member) == 'Michael Palin'
+        self.assertEqual('%s' % self.member, 'Michael Palin')
 
     def test_get_formal_name(self):
-        assert self.member.get_formal_name() == 'Sir M.E. Palin CBE FRGS'
+        self.assertEqual(self.member.get_formal_name(),
+                         'Sir M.E. Palin CBE FRGS')
 
     # TODO: Test sync_email
     # def test_sync_email(self):
@@ -44,8 +45,7 @@ class TestGuest(TestCase):
             first_name='Eric',
             last_name='Idle'
         )
-        string = unicode(guest)
-        assert string == 'Mr Eric Idle'
+        self.assertEqual('%s' % guest, 'Mr Eric Idle')
 
 
 class TestMeeting(TestCase):
@@ -57,5 +57,4 @@ class TestMeeting(TestCase):
             date=date(2014, 3, 22),
             name='Meeting'
         )
-        string = unicode(meeting)
-        assert string == 'Meeting (March 2014)'
+        self.assertEqual('%s' % meeting, 'Meeting (March 2014)')
