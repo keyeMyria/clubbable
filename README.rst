@@ -19,12 +19,9 @@ support; at least JPEG, maybe PNG. e.g. ::
 Importing from Microsoft Access
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you want to import data from a Microsoft Access database, *clubbable*'s
-importmdb.py utility requires mdbtools_. It is available from the
-mdbtools_ homepage.
-
-You might also be able to install it from your operating system's software
-repository. e.g. ::
+If you want to import data from a Microsoft Access database, you will need
+mdbtools_. It is available from the mdbtools_ homepage. You might also be able
+to install it from your operating system's software repository. e.g. ::
 
     $ sudo apt-get install mdbtools
 

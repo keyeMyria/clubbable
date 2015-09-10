@@ -41,6 +41,7 @@ INSTALLED_APPS = (
 
     'club',
     'docs',
+    'dropboxer',
     'galleries',
     'mailer',
     'website',
@@ -116,6 +117,10 @@ MDB_EXPORT_CMD = '/usr/bin/mdb-export'
 
 # Path to static files from legacy site
 LEGACY_FILES_PATH = '~/src/owlclub/lib/var'
+
+# Details for fetching files from Dropbox
+DROPBOX_APP_KEY = 'app_key'
+DROPBOX_APP_SECRET = 'app_secret'
 
 # Mail settings for outgoing mail
 SMTP_SERVER = 'localhost'
