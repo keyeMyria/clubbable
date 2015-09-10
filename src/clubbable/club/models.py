@@ -20,7 +20,7 @@ from django.db.models.signals import post_save
 
 class Member(models.Model):
     """
-    Member instances can be sent notices. They and Guest instances are
+    Member instances can be sent e-mails. They and Guest instances are
     associated with gallery images.
     """
     id = models.PositiveIntegerField(primary_key=True)  # OwlID

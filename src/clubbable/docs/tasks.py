@@ -16,17 +16,17 @@ from club.models import Member
 from django.conf import settings
 from django.template import loader
 from django.template.context import Context
-from notices.models import MessageTemplate
+from docs.models import MessageTemplate
 
 
 def _render_string(string, context):
     return loader.get_template_from_string(string).render(context)
 
 
-def _attach_notice(message, notice):
-    attachment = MIMEApplication(notice.data)
+def _attach_doc(message, doc):
+    attachment = MIMEApplication(doc.data)
     attachment.add_header(
-        'Content-Disposition', 'attachment', filename=notice.filename)
+        'Content-Disposition', 'attachment', filename=doc.filename)
     message.attach(attachment)
 
 
@@ -40,19 +40,19 @@ def _build_message(template, member):
     context = Context({
         'full_name': member.get_full_name(),
         'formal_name': member.get_formal_name(),
-        'notices': ['%s' % a for a in template.attachments]
+        'docs': ['%s' % a for a in template.docs]
     })
     if template.html:
         message = MIMEMultipart('alternative')
         _attach_text_template(message, template.text, context)
         _attach_text_template(message, template.html, context, 'html')
-        for notice in template.notices:
-            _attach_notice(message, notice)
-    elif template.notices:
+        for doc in template.docs:
+            _attach_doc(message, doc)
+    elif template.docs:
         message = MIMEMultipart()
         _attach_text_template(message, template.text, context)
-        for notice in template.notices:
-            _attach_notice(message, notice)
+        for doc in template.docs:
+            _attach_doc(message, doc)
     else:
         text = _render_string(template.text, context)
         message = MIMEText(text)

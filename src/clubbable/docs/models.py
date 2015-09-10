@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class Notice(models.Model):
+class Document(models.Model):
     """
     A Notice is usually a PDF document that is sent to members.
     """
@@ -29,7 +29,7 @@ class MessageTemplate(models.Model):
     subject = models.CharField(max_length=255)
     text = models.TextField()
     html = models.TextField(blank=True)
-    notices = models.ManyToManyField(Notice)
+    docs = models.ManyToManyField(Document)
 
     def __str__(self):
         return self.subject
@@ -37,7 +37,7 @@ class MessageTemplate(models.Model):
     def __unicode__(self):
         return self.subject
 
-    def get_subject_or_notices(self):
-        if self.notices:
-            return ', '.join(['%s' % n for n in self.notices])
+    def get_subject_or_docs(self):
+        if self.docs:
+            return ', '.join(['%s' % n for n in self.docs])
         return self.subject
