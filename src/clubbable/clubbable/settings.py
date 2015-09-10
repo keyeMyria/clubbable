@@ -100,6 +100,6 @@ BOUNCE_ADDRESS = '<bounce@example.com>'  # Optional
 
 # Import settings for local deployment, if applicable
 try:
-    from settings_local import *
+    from clubbable.settings_local import *
 except ImportError:
     pass
