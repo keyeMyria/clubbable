@@ -39,6 +39,7 @@ INSTALLED_APPS = (
 
     'club',
     'docs',
+    'mailer',
     'website',
 )
 
