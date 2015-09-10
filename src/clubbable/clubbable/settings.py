@@ -91,6 +91,9 @@ STATIC_URL = '/static/'
 # Title by which to refer to members, e.g. "Rotarian". None if not applicable
 MEMBER_TITLE = 'Owl'
 
+# The absolute path to the mdb-export command
+MDB_EXPORT_CMD = '/usr/bin/mdb-export'
+
 # Mail settings for outgoing mail
 SMTP_SERVER = 'localhost'
 SMTP_PORT = 0  # 0 = Default
