@@ -1,26 +1,54 @@
-{% include "website/base.html" %}
+{% extends "website/landing_base.html" %}
+{% load staticfiles %}
 
-{% block content %}
+{% block nav %}
+    <div class="container-fluid">
+      <button type="button"
+              class="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#bs-example-navbar-collapse-1"
+              aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
 
-{% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
-{% endif %}
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <form class="navbar-form navbar-right"
+              method="post"
+              action="{% url 'django.contrib.auth.views.login' %}">
+          {% csrf_token %}
+          <div class="form-group">
+            <input id="id_username"
+                   name="username"
+                   type="text"
+                   class="form-control"
+                   placeholder="e-mail address">
+            <input id="id_password"
+                   name="password"
+                   type="password"
+                   class="form-control">
+          </div>
+          <input type="hidden" name="next" value="{{ next }}" />
+          <button type="submit" class="btn btn-default">Log in</button>
+        </form>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+{% endblock %}
 
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
+{% block container %}
+    {% if form.errors %}
+    <div class="alert alert-danger" role="alert">
+      <p>Your username and password didn't match. Please try again.</p>
+    </div>
+    {% endif %}
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
-</form>
+    <div class="jumbotron">
+      <h1>{{ heading }}</h1>
 
+      <img src="{% static image %}" />
+
+      {{ content_html|safe }}
+    </div>
 {% endblock %}

@@ -4,5 +4,5 @@ from django.conf.urls import url
 from website.views import *
 
 urlpatterns = [
-    url(r'^$', dashboard),
+    url(r'^$', dashboard, name='dashboard'),
 ]
