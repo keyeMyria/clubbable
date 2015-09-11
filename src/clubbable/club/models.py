@@ -5,10 +5,9 @@ The class definitions include a field name in comments after each field. This
 corresponds the the field in the Microsoft Access database that is imported to
 populate *clubbable*.
 
-The import tool is src/clubbable/dbtools/importmdb.py. It is specific to the
-club for which *clubbable* is written, but should be easy to customise for
-other clubs, or simply ignored if the club does not use a Microsoft Access
-database.
+The import is done by import_mdb/import_mdb.py. It is specific to the club for
+which *clubbable* was written, but should be easy to customise for other
+clubs, or simply ignored if the club does not use a Microsoft Access database.
 
 """
 from __future__ import unicode_literals
@@ -28,14 +27,18 @@ class GetOrNoneManager(models.Manager):
             return self.get(**kwargs)
         except self.model.DoesNotExist:
             return None
+        # unlike objects.first(), preserves MultipleObjectsReturned
 
 
+# Remember to update migrations file with `./manage.py makemigrations club` if
+# you change these models
 class Member(models.Model):
     """
     Member instances can be sent e-mails. They and Guest instances are
     associated with gallery images.
     """
-    # Comments refer to the equivalent column in this club's Access database
+    # Comments refer to the equivalent column in this club's Access database.
+    # See module docstring for context.
     id = models.PositiveIntegerField(primary_key=True)  # OwlID
     title = models.CharField(max_length=100, blank=True)  # Title
     initials = models.CharField(max_length=100)  # Initials
@@ -74,9 +77,8 @@ class Member(models.Model):
     qualification_literature = models.BooleanField(default=False)  # Literature
     qualification_music = models.BooleanField(default=False)  # Music
     qualification_science = models.BooleanField(default=False)  # Science
-    hon_life_member = models.BooleanField(
-        verbose_name='Honorary life member',
-        default=False)  # HonLifeMember
+    hon_life_member = models.BooleanField(verbose_name='Honorary life member',
+                                          default=False)  # HonLifeMember
     canonisation_date = models.DateField(null=True, blank=True)
     #                                                          CanonisationDate
     # Category
@@ -207,11 +209,11 @@ class Profile(models.Model):
     Profile table links users with Members. Users need not be Members, and
     Members need not have an associated User.
     """
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
     # Members can only be associated with one user. To allow the mailer to
     # send to other organisations and non-members, Users do not need to be
     # Members.
-    member = models.ForeignKey(Member, unique=True, null=True, blank=True)
+    member = models.OneToOneField(Member, null=True, blank=True)
 
     def __str__(self):
         if self.member:

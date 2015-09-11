@@ -27,7 +27,7 @@ class LegacyDbRouter(object):
             return True
         return None
 
-    def allow_syncdb(self, db, model):
+    def allow_migrate(self, db, model):
         # Make sure import_legacy.models only use the legacy db
         if db == 'legacy':
             return model._meta.app_label == 'import_legacy'
