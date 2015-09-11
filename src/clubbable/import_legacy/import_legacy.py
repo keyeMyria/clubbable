@@ -36,7 +36,7 @@ def alt_slugify(string):
     return string.strip('_.- ').lower()
 
 
-def migrate_members():
+def import_members():
     for original in OriginalMember.objects.all():
         # Check whether Member has already been imported
         if Member.objects.filter(pk=original.id).count():
@@ -62,7 +62,7 @@ def migrate_members():
         )
 
 
-def migrate_users():
+def import_users():
     pattern = re.compile('^([^ ]+) (.+)$')
     for original in OriginalUser.objects.all():
         # Split fullname into first_name and last_name
@@ -109,7 +109,7 @@ def migrate_users():
                 pass
 
 
-def migrate_cartoons():
+def import_cartoons(files_path):
     """Migrate data, and copy the original image to its new location.
     """
     pattern = re.compile(r'^(\d{4})\-(\d{2})\-(\d{2}) ')
@@ -131,7 +131,7 @@ def migrate_cartoons():
             cartoon.members.add(member)
         # Give the file a nice filename
         filepath = '{path}/cartoons/full/{filename}'.format(
-            path=settings.LEGACY_FILES_PATH,
+            path=files_path,
             filename=original.filename
         )
         image_file = ImageFile(open(filepath, 'rb'))
@@ -140,7 +140,7 @@ def migrate_cartoons():
         cartoon.save()
 
 
-def migrate_photographs():
+def import_photographs(files_path):
     gallery = Gallery.objects.get(name='Photographs')
     for original in OriginalPhotograph.objects.all():
         photographer = Member.objects.get_or_none(pk=original.photographer.id)
@@ -155,7 +155,7 @@ def migrate_photographs():
             member = Member.objects.get(pk=member.id)
             photo.members.add(member)
         filepath = '{path}/photographs/full/{filename}'.format(
-            path=settings.LEGACY_FILES_PATH,
+            path=files_path,
             filename=original.filename
         )
         image_file = ImageFile(open(filepath, 'rb'))
@@ -163,12 +163,12 @@ def migrate_photographs():
         photo.save()
 
 
-def migrate_notices():
+def import_notices(files_path):
     mime = magic.Magic(mime=True)
     folder = Folder.objects.get(name='Notices')
     for original in OriginalNotice.objects.all():
         filepath = '{path}/notices/{filename}'.format(
-            path=settings.LEGACY_FILES_PATH,
+            path=files_path,
             filename=original.filename
         )
         file_ = File(open(filepath, 'rb'))
@@ -183,12 +183,12 @@ def migrate_notices():
         notice.save()
 
 
-def migrate_documents():
+def import_documents(files_path):
     mime = magic.Magic(mime=True)
     folder = Folder.objects.get(name='Documents')
     for original in OriginalDocument.objects.all():
         filepath = '{path}/documents/{filename}'.format(
-            path=settings.LEGACY_FILES_PATH,
+            path=files_path,
             filename=original.filename
         )
         file_ = File(open(filepath, 'rb'))
@@ -209,17 +209,26 @@ def migrate_documents():
         document.save()
 
 
-if __name__ == '__main__':
-    # Required fixtures:
-    #   Galleries named "Photographs" and "Cartoons"
-    #   Folders named "Notices" and "Documents"
-    #   Preferably all the meetings
+def import_legacy(incl_files=True, files_path=None):
+    """
+    Import from a legacy database
 
+    Connection details are configured in settings.DATABASES['legacy']
+
+    :param incl_files: Whether to include documents and images
+    :param files_path: Path to files. Overrides settings.LEGACY_FILES_PATH.
+    """
     # First migrate users, before things that link to them
-    migrate_members()
-    migrate_users()
+    import_members()
+    import_users()
 
-    migrate_cartoons()
-    migrate_photographs()
-    migrate_notices()
-    migrate_documents()
+    if incl_files:
+        files_path = files_path or settings.LEGACY_FILES_PATH
+        import_cartoons(files_path)
+        import_photographs(files_path)
+        import_notices(files_path)
+        import_documents(files_path)
+
+
+if __name__ == '__main__':
+    import_legacy()
