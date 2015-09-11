@@ -17,7 +17,6 @@ from django.contrib.auth.models import User
 from django.core.mail import mail_admins
 from django.db import models
 from django.db.models.signals import post_save
-from galleries.models import Image
 
 
 class GetOrNoneManager(models.Manager):
@@ -36,6 +35,7 @@ class Member(models.Model):
     Member instances can be sent e-mails. They and Guest instances are
     associated with gallery images.
     """
+    # Comments refer to the equivalent column in this club's Access database
     id = models.PositiveIntegerField(primary_key=True)  # OwlID
     title = models.CharField(max_length=100, blank=True)  # Title
     initials = models.CharField(max_length=100)  # Initials
@@ -62,7 +62,8 @@ class Member(models.Model):
     # WorkTelephone
     # MobileTelephone
     email = models.CharField(max_length=150, blank=True)  # EmailAddress
-    send_emails = models.BooleanField(default=False)  # ReceivesNoticesElectronically
+    send_emails = models.BooleanField(default=False)
+    #                                             ReceivesNoticesElectronically
     # Proposer
     # Seconder
     # SpouseName
@@ -76,14 +77,14 @@ class Member(models.Model):
     hon_life_member = models.BooleanField(
         verbose_name='Honorary life member',
         default=False)  # HonLifeMember
-    canonisation_date = models.DateField(null=True,
-                                         blank=True)  # CanonisationDate
+    canonisation_date = models.DateField(null=True, blank=True)
+    #                                                          CanonisationDate
     # Category
     # ExternalRole1
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    profile_image = models.ForeignKey(Image, null=True, blank=True)
+    profile_image = models.ForeignKey('galleries.Image', null=True, blank=True)
 
     # Used by import_legacy to find foreign keys
     objects = GetOrNoneManager()
@@ -99,22 +100,23 @@ class Member(models.Model):
 
     def get_full_name(self):
         if settings.MEMBER_TITLE:
-            return ' '.join([settings.MEMBER_TITLE,
-                             self.familiar_name,
-                             self.last_name])
-        return ' '.join([self.familiar_name, self.last_name])
+            return ' '.join((
+                settings.MEMBER_TITLE,
+                self.familiar_name,
+                self.last_name
+            ))
+        return ' '.join((self.familiar_name, self.last_name))
 
     def get_formal_name(self):
-        return ' '.join([
+        return ' '.join((
             self.title,
             self.initials,
             self.last_name,
             self.post_title,
-        ])
+        ))
 
     @staticmethod
-    def sync_email(sender, instance, created, raw, using, update_fields,
-                   **kwargs):
+    def sync_email(sender, instance, **kwargs):
         """
         Compare e-mail address with that of corresponding user (if exists). If
         necessary, sync and notify admin.
@@ -148,10 +150,12 @@ class Guest(models.Model):
     first_name = models.CharField(max_length=100)  # GuestFirstName Char (100),
     initials = models.CharField(max_length=100)  # GuestInitials Char (100),
     title = models.CharField(max_length=100)  # GuestTitle Char (100),
-    admitted_to_club = models.BooleanField(default=False)  # AdmittedToOwldom Bool,
-    date_admitted = models.DateField(null=True,
-                                     blank=True)  # DateAdmitted Timestamp,
-    member = models.ForeignKey(Member, null=True, blank=True)  # MemberNum Int8,
+    admitted_to_club = models.BooleanField(default=False)
+    #                                                    AdmittedToOwldom Bool,
+    date_admitted = models.DateField(null=True, blank=True)
+    #                                                   DateAdmitted Timestamp,
+    member = models.ForeignKey(Member, null=True, blank=True)
+    #                                                           MemberNum Int8,
     delisted = models.BooleanField(default=False)  # Delisted Bool
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -162,10 +166,10 @@ class Guest(models.Model):
         ordering = ('last_name', 'first_name')
 
     def __str__(self):
-        return ' '.join([self.title, self.first_name, self.last_name])
+        return ' '.join((self.title, self.first_name, self.last_name))
 
     def __unicode__(self):
-        return ' '.join([self.title, self.first_name, self.last_name])
+        return ' '.join((self.title, self.first_name, self.last_name))
 
 
 class Meeting(models.Model):
@@ -179,8 +183,10 @@ class Meeting(models.Model):
     date = models.DateField()  # EventDate Timestamp,
     name = models.CharField(max_length=100, blank=True)  # Name Char (100),
     status = models.CharField(max_length=100, blank=True)  # Status Char (100),
-    number_of_tables = models.PositiveSmallIntegerField()  # NumberOfTables Int4
-    comment = models.CharField(max_length=100, blank=True)  # Comment Char (100)
+    number_of_tables = models.PositiveSmallIntegerField()
+    #                                                       NumberOfTables Int4
+    comment = models.CharField(max_length=100, blank=True)
+    #                                                        Comment Char (100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -197,11 +203,13 @@ class Meeting(models.Model):
 
 
 class Profile(models.Model):
-    """Profile table links users with Owls. Users need not be Owls, and Owls
-    need not have an associated user.
+    """
+    Profile table links users with Members. Users need not be Members, and
+    Members need not have an associated User.
     """
     user = models.ForeignKey(User, unique=True)
-    # Members can only be associated with one user. Users do not need to be
+    # Members can only be associated with one user. To allow the mailer to
+    # send to other organisations and non-members, Users do not need to be
     # Members.
     member = models.ForeignKey(Member, unique=True, null=True, blank=True)
 
@@ -215,9 +223,11 @@ class Profile(models.Model):
             return '%s (%s)' % (self.user, self.member)
         return '%s' % self.user
 
+    @staticmethod
+    def create_profile(sender, instance, created, **kwargs):
+        if created:
+            member = Member.objects.get_or_none(email=instance.email)
+            Profile.objects.create(user=instance, member=member)
 
-def create_profile(sender, instance, created, **kwargs):
-    if created:
-        profile, created = Profile.objects.get_or_create(user=instance)
 
-post_save.connect(create_profile, sender=User)
+post_save.connect(Profile.create_profile, sender=User)

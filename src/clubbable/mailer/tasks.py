@@ -67,10 +67,10 @@ def _build_message(template, member):
 
 
 @shared_task
-def send_message(template_id, member_id):
+def send_message(template_id, user_id):
     template = MessageTemplate.objects.get(template_id)
-    member = Member.objects.get(member_id)
-    message = _build_message(template, member)
+    user = Member.objects.get(user_id)
+    message = _build_message(template, user)
     smtp = smtplib.SMTP(settings.SMTP_SERVER, settings.SMTP_PORT)
-    smtp.sendmail(settings.FROM_ADDRESS, [member.email], message.as_string())
+    smtp.sendmail(settings.FROM_ADDRESS, [user.email], message.as_string())
     smtp.quit()
