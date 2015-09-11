@@ -4,13 +4,9 @@ heading: The Owl Club
 # A path to an image. The path is relative to STATIC_URL in settings.py
 image: img/landing_page_owl.jpeg
 # Provide the content of the landing page in Markdown format.
-# Keep the opening and closing quotation marks at the start and end of the
-# content. This will allow you to use # and ' within the content. If you
-# want to use quotation marks within the content, you can either use non-ASCII
-# quotation marks, e.g. “ and ”, or double-up your quotation marks, e.g. "".
 # For more information about Markdown and syntax, see
 # http://daringfireball.net/projects/markdown/
-content_markdown: "
+content_markdown: |
   The Owl Club is a remarkable remnant of the Victorian period of Cape Town,
   South Africa, being a gentleman’s dining club formed in 1894 to provide a
   social meeting-place for those with an interest in the liberal arts and
@@ -98,16 +94,9 @@ content_markdown: "
 
   ## Enquiries
 
-  mail:
+  e-mail: secretary *at* owls *dot* org *dot* za, or secretary *at* owls *dot*
+  capetown
 
-      The Secretary
-      Suite #33
-      Postnet X18
-      Rondebosch
-      7700
-      South Africa
+  telephone: +27 (0)84 OWL CLUB (695 2582)
 
-  tel: +27 (0)84 OWL CLUB (695 2582)
-  e-mail: secretary at owls dot org dot za
-
-  "
+  mail: The Secretary, Suite #33, Postnet X18, Rondebosch, 7700, South Africa
