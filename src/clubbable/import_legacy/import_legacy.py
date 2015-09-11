@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
 Import members, users, photographs, cartoons, notices and documents from the
@@ -228,7 +227,3 @@ def import_legacy(incl_files=True, files_path=None):
         import_photographs(files_path)
         import_notices(files_path)
         import_documents(files_path)
-
-
-if __name__ == '__main__':
-    import_legacy()
