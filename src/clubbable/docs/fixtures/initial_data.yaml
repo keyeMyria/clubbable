@@ -1,0 +1,9 @@
+---
+- model: docs.folder
+  pk: 1
+  fields:
+    name: Notices
+- model: docs.folder
+  pk: 2
+  fields:
+    name: Documents

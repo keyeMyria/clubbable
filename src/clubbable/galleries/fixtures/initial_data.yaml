@@ -1,0 +1,9 @@
+---
+- model: galleries.gallery
+  pk: 1
+  fields:
+    name: Photographs
+- model: galleries.gallery
+  pk: 2
+  fields:
+    name: Cartoons
