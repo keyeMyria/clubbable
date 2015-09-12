@@ -4,10 +4,10 @@ from django.contrib import admin
 from django.contrib.auth import urls as auth_urls, views as auth_views
 from markdown import markdown
 import yaml
-from website import urls as website_urls
 from docs import urls as docs_urls
 from galleries import urls as galleries_urls
-# from dropboxer import urls as dropbox_urls
+from dropboxer import urls as dropbox_urls
+from website.views import dashboard
 
 
 def _get_login_context():
@@ -32,10 +32,10 @@ auth_urls.urlpatterns[0] = url(
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^$', include(website_urls)),
-    url(r'^doc/$', include(docs_urls)),
-    url(r'^img/$', include(galleries_urls)),
-    # url(r'^dropbox/$', include(dropbox_urls)),
+    url(r'^$', dashboard, name='dashboard'),
+    url(r'^doc/', include(docs_urls)),
+    url(r'^img/', include(galleries_urls)),
+    url(r'^dropbox/', include(dropbox_urls)),
 
     url(r'^accounts/', include(auth_urls)),
     url(r'^admin/', include(admin.site.urls)),

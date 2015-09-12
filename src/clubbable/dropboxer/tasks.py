@@ -6,16 +6,19 @@ from dropboxer.models import DropboxUser
 
 def check_galleries(user):
     if user.galleries_folder:
+        # TODO: ...
         pass
 
 
 def check_docs(user):
     if user.docs_folder:
+        # TODO: ...
         pass
 
 
 def check_mdb(user):
     if user.mdb_folder:
+        # TODO: ...
         pass
 
 

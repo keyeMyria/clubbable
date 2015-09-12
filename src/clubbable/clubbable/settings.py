@@ -109,6 +109,14 @@ CLUB_NAME = "The Pirate's Cove"
 # Title by which to refer to members. None if not applicable
 MEMBER_TITLE = 'Captain'
 
+# Apps that add tiles to the dashboard
+DASHBOARD_APPS = (
+    # 'galleries',
+    # 'docs',
+    'dropboxer',
+    # "My profile" or "Profiles" or something.
+)
+
 # Location of uploaded files
 UPLOAD_ROOT = '/usr/upload/'
 

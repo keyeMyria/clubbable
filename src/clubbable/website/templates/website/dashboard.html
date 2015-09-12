@@ -1,5 +1,27 @@
-{% include "website/base.html" %}
+{% extends "website/authenticated_base.html" %}
+
+{% block headcss %}
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+{% endblock %}
 
 {% block container %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-{{ message.level_tag }}">
+      {{ message }}
+    </div>
+    {% endfor %}
+    {% endif %}
 
+    {% for row in rows %}
+    <div class="row">
+      {% for tile in row %}
+      <div class="col-xs-6 col-md-4">
+        <div class="well" style="text-align: center;">
+          {{ tile|safe }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endfor %}
 {% endblock %}
