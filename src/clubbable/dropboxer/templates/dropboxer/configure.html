@@ -1,0 +1,19 @@
+
+    {% block container %}
+    <div class="jumbotron">
+      <h1>Configure Dropbox</h1>
+      <p>Configure which Dropbox folder to fetch new files from.</p>
+      {# TODO: Fetch the Dropbox folders and allow the user to select #}
+      <form role="form" method="post" action="{% url 'dropbox_config' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_club_folder">Club folder:</label>
+          <input id="id_club_folder"
+                 name="club_folder"
+                 type="text"
+                 class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-default">Save</button>
+      </form>
+    </div>
+    {% endblock %}

@@ -9,9 +9,7 @@ class DropboxUser(models.Model):
     user = models.OneToOneField(User)  # Only one account per user
     username = models.CharField(max_length=255)
     access_token = models.CharField(max_length=255, blank=True)
-    galleries_folder = models.CharField(max_length=255, blank=True)
-    docs_folder = models.CharField(max_length=255, blank=True)
-    mdb_folder = models.CharField(max_length=255, blank=True)
+    club_folder = models.CharField(max_length=255, blank=True)
 
     objects = GetOrNoneManager()
 

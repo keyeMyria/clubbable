@@ -5,21 +5,28 @@ from dropboxer.models import DropboxUser
 
 
 def check_galleries(user):
-    if user.galleries_folder:
-        # TODO: ...
-        pass
+    """
+    Downloads images from folders with the same name as a gallery
+    """
+    # TODO: ...
+    pass
 
 
 def check_docs(user):
-    if user.docs_folder:
-        # TODO: ...
-        pass
+    """
+    Downloads documents from folders with the same name as a documents folder
+    """
+    # TODO: ...
+    pass
 
 
 def check_mdb(user):
-    if user.mdb_folder:
-        # TODO: ...
-        pass
+    """
+
+    :param user:
+    :return:
+    """
+    pass
 
 
 @shared_task
