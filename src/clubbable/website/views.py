@@ -25,10 +25,10 @@ def dashboard(request):
         rows = []
         row = []
         for i, item in enumerate(items):
-            if i % 3 and row:
+            row.append(item)
+            if not (i + 1) % 3:
                 rows.append(row)
                 row = []
-            row.append(item)
         if row:
             rows.append(row)
         return rows

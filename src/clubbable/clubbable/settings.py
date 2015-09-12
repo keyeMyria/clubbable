@@ -112,7 +112,7 @@ MEMBER_TITLE = 'Captain'
 # Apps that add tiles to the dashboard
 DASHBOARD_APPS = (
     # 'galleries',
-    # 'docs',
+    'docs',
     'dropboxer',
     # "My profile" or "Profiles" or something.
 )
@@ -129,6 +129,11 @@ LEGACY_FILES_PATH = '~/src/owlclub/lib/var'
 # Details for fetching files from Dropbox
 DROPBOX_APP_KEY = 'app_key'
 DROPBOX_APP_SECRET = 'app_secret'
+
+# Mailgun settings
+MAILGUN_DOMAIN = 'mg.example.com'
+CLUB_DOMAIN = 'example.com'  # Used for mailing lists
+MAILGUN_API_KEY = 'key-123456'
 
 # Mail settings for outgoing mail
 SMTP_SERVER = 'localhost'

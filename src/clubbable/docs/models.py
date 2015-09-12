@@ -27,3 +27,22 @@ class Document(models.Model):
 
     def __unicode__(self):
         return self.description or self.filename
+
+    @property
+    def doc_type(self):
+        """
+        Returns a doc type that can be used for selecting an icon based on
+        file extension.
+        """
+        doc_types = {
+            'pdf': 'pdf',
+            'doc': 'word',
+            'docx': 'word',
+            'xls': 'excel',
+            'xlsx': 'excel',
+            'ppt': 'powerpoint',
+            'pptx': 'powerpoint',
+            'zip': 'archive',
+        }
+        ext = self.filename.split('.')[-1]
+        return doc_types.get(ext, 'pdf')
