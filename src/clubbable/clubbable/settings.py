@@ -58,7 +58,23 @@ ROOT_URLCONF = 'clubbable.urls'
 
 WSGI_APPLICATION = 'clubbable.wsgi.application'
 
-TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': (
+                'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
+                'django.template.context_processors.media',
+                'django.template.context_processors.static',
+                'django.template.context_processors.tz',
+                'django.contrib.messages.context_processors.messages',
+            ),
+        },
+    }
+]
 
 
 # Database
@@ -115,7 +131,7 @@ MEMBER_TITLE = 'Captain'
 
 # Apps that add tiles to the dashboard
 DASHBOARD_APPS = (
-    # 'galleries',
+    'galleries',
     'docs',
     'dropboxer',
     # "My profile" or "Profiles" or something.
