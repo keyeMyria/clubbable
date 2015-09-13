@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+from django.conf import settings
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse, HttpResponseRedirect
@@ -35,9 +36,20 @@ def send(request, folder_id, pk):
 
 
 def download(request, folder_id, pk, filename):
+    """
+    Return doc as an HTTP response attachment
+
+    :param request: HTTP Request
+    :param folder_id: Keeps the URLs logical, but not used
+    :param pk: The primary key of the document
+    :param filename: Makes the URL to look nice, but not used
+    """
     doc = get_object_or_404(Document, pk=pk)
     mime = magic.Magic(mime=True)
-    response = HttpResponse(doc.data, content_type=mime.from_buffer(doc.data))
+    file_path = settings.MEDIA_ROOT + doc.file.name
+    content_type = mime.from_file(file_path)
+    response = HttpResponse(doc.file.read(), content_type=content_type)
+    response['Content-Length'] = doc.file.size
     response['Content-Disposition'] = ('attachment; '
                                        'filename="%s"' % doc.filename)
     return response

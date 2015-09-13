@@ -22,8 +22,6 @@ SECRET_KEY = '+o6khsst!&j2pp3!d#&=2s7!$ra4g$xjipwfw%vpqc_eqt2jwo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-TEMPLATE_DEBUG = False
-
 ALLOWED_HOSTS = []
 
 
@@ -96,6 +94,12 @@ USE_L10N = True
 
 USE_TZ = True
 
+# Absolute filesystem path to the directory that will hold user-uploaded files.
+MEDIA_ROOT = '/var/www/example.com/media/'
+
+# URL that handles the media served from MEDIA_ROOT
+MEDIA_URL = 'http://media.example.com/'
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 STATIC_URL = '/static/'
@@ -116,9 +120,6 @@ DASHBOARD_APPS = (
     'dropboxer',
     # "My profile" or "Profiles" or something.
 )
-
-# Location of uploaded files
-UPLOAD_ROOT = '/usr/upload/'
 
 # The absolute path to the mdb-export command
 MDB_EXPORT_CMD = '/usr/bin/mdb-export'

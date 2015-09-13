@@ -7,9 +7,6 @@ from imagekit.processors import ResizeToFill, ResizeToFit
 from club.models import Meeting, Member, Guest
 
 
-fs = FileSystemStorage(location=settings.UPLOAD_ROOT)
-
-
 class Gallery(models.Model):
     name = models.CharField(max_length=255)
     # poster_image is the image for this gallery in the list of galleries
@@ -32,7 +29,7 @@ class Image(models.Model):
     creator = models.ForeignKey(Member, related_name='creator_image',
                                 null=True, blank=True)
 
-    original = models.ImageField(upload_to='image/%Y/%m/', storage=fs)
+    original = models.ImageField(upload_to='img/%Y/%m/')
     display = ImageSpecField(source='original',
                              processors=[ResizeToFit(600, 370)],
                              format='JPEG',

@@ -19,14 +19,17 @@ class Document(models.Model):
     """
     folder = models.ForeignKey(Folder)
     description = models.CharField(max_length=255, blank=True)
-    filename = models.CharField(max_length=50)
-    data = models.BinaryField()
+    file = models.FileField(upload_to='doc/%Y/%m/')
 
     def __str__(self):
         return self.description or self.filename
 
     def __unicode__(self):
         return self.description or self.filename
+
+    @property
+    def filename(self):
+        return self.file.name.split('/')[-1]
 
     @property
     def doc_type(self):
@@ -44,5 +47,5 @@ class Document(models.Model):
             'pptx': 'powerpoint',
             'zip': 'archive',
         }
-        ext = self.filename.split('.')[-1]
+        ext = self.file.name.split('.')[-1]
         return doc_types.get(ext, 'pdf')
