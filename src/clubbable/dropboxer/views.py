@@ -70,24 +70,6 @@ def check_dropbox(request):
     return HttpResponseRedirect(reverse('dashboard'))
 
 
-@dropbox_required
-def configure_dropbox(request):
-    """
-    Allow user to set their docs, galleries and mdb directories
-    """
-    dropbox_user = DropboxUser.objects.get(user=request.user)
-    if request.method == 'POST':
-        dropbox_user.galleries_folder = request.POST['galleries_folder']
-        dropbox_user.docs_folder = request.POST['docs_folder']
-        dropbox_user.mdb_folder = request.POST['mdb_folder']
-        dropbox_user.save()
-        return HttpResponseRedirect(reverse('dashboard'))
-    return render(request, 'dropboxer/configure.html', {
-        'full_name': get_full_name(request.user),
-        'dropbox_user': dropbox_user,
-    })
-
-
 def webhook(request):
     """
     Dropbox pings this view when files have changed

@@ -48,5 +48,5 @@ def check_dropbox():
     Traverse clubbable folders on Dropbox and if new files are found, import
     them
     """
-    for user in DropboxUser.objects.order_by('username').distinct('username'):
+    for user in DropboxUser.objects.exclude(access_token=''):
         check_dropbox_user(user)
