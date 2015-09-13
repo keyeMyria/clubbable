@@ -1,3 +1,13 @@
-from django.shortcuts import render
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView
+from galleries.models import Gallery, Image
 
-# Create your views here.
+
+class ImageList(ListView):
+    context_object_name = 'images'
+
+    def get_queryset(self):
+        gallery = get_object_or_404(Gallery, pk=self.args[0])
+        return Image.objects.filter(gallery=gallery)

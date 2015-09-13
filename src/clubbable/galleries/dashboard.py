@@ -4,7 +4,7 @@ Adds tiles to the dashboard
 """
 from __future__ import unicode_literals
 from django.template import loader
-from docs.models import Folder
+from galleries.models import Gallery
 
 
 def get_tiles(request):
@@ -12,7 +12,7 @@ def get_tiles(request):
     Return HTML tiles for the dashboard
     """
     tiles = []
-    for folder in Folder.objects.all():
-        template = loader.get_template('docs/folder_tile.html')
-        tiles.append(template.render({'folder': folder}))
+    for gallery in Gallery.objects.all():
+        template = loader.get_template('galleries/gallery_tile.html')
+        tiles.append(template.render({'gallery': gallery}))
     return tiles
