@@ -13,7 +13,7 @@ def dropbox_required(view_func):
         if dropbox_user and dropbox_user.access_token:
             return view_func(request, *args, **kwargs)
         if not dropbox_user or not dropbox_user.access_token:
-            flow = get_auth_flow(request.session)
+            flow = get_auth_flow(request)
             auth_url = flow.start()
             return HttpResponseRedirect(auth_url)
     return wrapped

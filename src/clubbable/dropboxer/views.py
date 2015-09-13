@@ -21,14 +21,14 @@ logger = logging.getLogger(__name__)
 
 
 def connect(request):
-    flow = get_auth_flow(request.session)
+    flow = get_auth_flow(request)
     auth_url = flow.start()
     return HttpResponseRedirect(auth_url)
 
 
 def auth(request):
     try:
-        flow = get_auth_flow(request.session)
+        flow = get_auth_flow(request)
         access_token, user_id, url_state = flow.finish(request.GET)
     except DropboxOAuth2Flow.BadRequestException:
         return HttpResponseBadRequest()
