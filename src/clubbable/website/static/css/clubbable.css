@@ -1,0 +1,11 @@
+.cl-serif {
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.cl-space-before {
+  margin-top: 2em;
+}
+
+.cl-space-after {
+  margin-bottom: 2em;
+}
