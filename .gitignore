@@ -1,11 +1,6 @@
 *.py[cod]
 settings_local.py
-
-# C extensions
-*.so
-
-# Virtualenv
-venv
+src/clubbable/db.sqlite3
 
 # Generated documentation
 doc/_build
@@ -21,8 +16,8 @@ nosetests.xml
 # Translations
 *.mo
 
-# Mr Developer
-.mr.developer.cfg
+# IDE settings
 .project
 .pydevproject
 .idea
+
