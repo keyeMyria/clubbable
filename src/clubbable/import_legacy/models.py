@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 These models help to migrate the legacy club database schema to the current
 """
-from __future__ import unicode_literals
 import re
 from django.db import models
 
@@ -45,9 +43,6 @@ class Office(models.Model):
     def __str__(self):
         return '%s' % self.office
 
-    def __unicode__(self):
-        return '%s' % self.office
-    
     class Meta:
         db_table = 'owl_offices'
         
@@ -91,9 +86,6 @@ class Member(models.Model):
     def __str__(self):
         return 'Owl %s %s' % (self.common_name, self.surname)
 
-    def __unicode__(self):
-        return 'Owl %s %s' % (self.common_name, self.surname)
-
     class Meta:
         db_table = 'owl_members'
 
@@ -116,9 +108,6 @@ class Cartoon(models.Model):
     def __str__(self):
         return '%s' % self.title
 
-    def __unicode__(self):
-        return '%s' % self.title
-    
     class Meta:
         db_table = 'cartoons'
     
@@ -141,9 +130,6 @@ class Photograph(models.Model):
     def __str__(self):
         return '%s' % self.title
 
-    def __unicode__(self):
-        return '%s' % self.title
-    
     class Meta:
         db_table = 'photographs'
     
@@ -167,9 +153,6 @@ class User(models.Model):
     def __str__(self):
         return '(User) %s' % self.fullname
 
-    def __unicode__(self):
-        return '(User) %s' % self.fullname
-    
     class Meta:
         db_table = 'users'
 
@@ -181,9 +164,6 @@ class Group(models.Model):
     def __str__(self):
         return '%s' % self.name
 
-    def __unicode__(self):
-        return '%s' % self.name
-    
     class Meta:
         db_table = 'groups'
         
@@ -197,9 +177,6 @@ class Notice(models.Model):
     def __str__(self):
         return '%s' % self.description
 
-    def __unicode__(self):
-        return '%s' % self.description
-    
     class Meta:
         db_table = 'notices'
 
@@ -224,9 +201,6 @@ class Document(models.Model):
     def __str__(self):
         return '%s (%s)' % (self.name, self.description)
 
-    def __unicode__(self):
-        return '%s (%s)' % (self.name, self.description)
-    
     class Meta:
         db_table = 'documents'
 

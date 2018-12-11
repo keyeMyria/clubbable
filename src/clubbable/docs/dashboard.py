@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 """
 Adds tiles to the dashboard
 """
-from __future__ import unicode_literals
 from django.template import loader
 from docs.models import Folder
 

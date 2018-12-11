@@ -1,10 +1,8 @@
-# -*- coding: utf-8 -*-
 """
 Import members, users, photographs, cartoons, notices and documents from the
 legacy database. This should be done after members, guests and meetings have
 been imported using import_mdb.
 """
-from __future__ import unicode_literals
 from datetime import date
 import os
 import re
@@ -23,7 +21,7 @@ from import_legacy.models import (
     Cartoon as OriginalCartoon,
     Photograph as OriginalPhotograph,
     Notice as OriginalNotice,
-    Document as OriginalDocument
+    Document as OriginalDocument,
 )
 
 

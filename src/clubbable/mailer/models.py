@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.db import models
 from docs.models import Document
 
@@ -18,9 +16,6 @@ class MessageTemplate(models.Model):
     docs = models.ManyToManyField(Document)
 
     def __str__(self):
-        return self.subject
-
-    def __unicode__(self):
         return self.subject
 
     def get_subject_or_docs(self):

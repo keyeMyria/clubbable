@@ -1,16 +1,13 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 import logging
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from django.http import (
     HttpResponseRedirect,
     HttpResponseForbidden,
     HttpResponseBadRequest,
-    HttpResponse)
-from django.shortcuts import render
-from dropbox.client import DropboxOAuth2Flow
-from club.utils import get_full_name
+    HttpResponse,
+)
+from django.urls import reverse
+import dropbox.oauth
 from dropboxer.decorators import dropbox_required
 from dropboxer.models import DropboxUser
 from dropboxer.tasks import check_dropbox_user
@@ -30,17 +27,17 @@ def auth(request):
     try:
         flow = get_auth_flow(request)
         access_token, user_id, url_state = flow.finish(request.GET)
-    except DropboxOAuth2Flow.BadRequestException:
+    except dropbox.oauth.BadRequestException:
         return HttpResponseBadRequest()
-    except DropboxOAuth2Flow.BadStateException:
+    except dropbox.oauth.BadStateException:
         # Start the auth flow again.
         return connect(request)
-    except DropboxOAuth2Flow.CsrfException:
+    except dropbox.oauth.CsrfException:
         return HttpResponseForbidden()
-    except DropboxOAuth2Flow.NotApprovedException:
+    except dropbox.oauth.NotApprovedException:
         messages.warning(request, 'Dropbox authentication was not approved.')
         return HttpResponseRedirect(reverse('dashboard'))
-    except DropboxOAuth2Flow.ProviderException as err:
+    except dropbox.oauth.ProviderException as err:
         logger.exception('Error authenticating Dropbox', err)
         return HttpResponseForbidden()
     dropbox_user, created = DropboxUser.objects.update_or_create(
@@ -74,7 +71,6 @@ def webhook(request):
     """
     Dropbox pings this view when files have changed
     """
-    # TODO: What does the request look like?
-    logger.info()
+    # TODO: Write this.
     check_dropbox.delay()
     return HttpResponse('Accepted', content_type='text/plain', status=202)

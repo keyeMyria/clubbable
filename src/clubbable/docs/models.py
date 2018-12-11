@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.db import models
 
 
@@ -9,22 +7,13 @@ class Folder(models.Model):
     def __str__(self):
         return '%s' % self.name
 
-    def __unicode__(self):
-        return '%s' % self.name
-
 
 class Document(models.Model):
-    """
-    A Notice is usually a PDF document that is sent to members.
-    """
     folder = models.ForeignKey(Folder, models.PROTECT)
     description = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='doc/%Y/%m/')
 
     def __str__(self):
-        return self.description or self.filename
-
-    def __unicode__(self):
         return self.description or self.filename
 
     @property
@@ -34,8 +23,8 @@ class Document(models.Model):
     @property
     def doc_type(self):
         """
-        Returns a doc type that can be used for selecting an icon based on
-        file extension.
+        Returns a doc type that can be used for selecting an icon based
+        on file extension.
         """
         doc_types = {
             'pdf': 'pdf',

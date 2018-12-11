@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.conf import settings
-from django.core.urlresolvers import reverse
-from dropbox.client import DropboxOAuth2Flow
+from django.urls import reverse
+from dropbox import DropboxOAuth2Flow
 
 
 def get_auth_flow(request):

@@ -10,7 +10,6 @@ which *clubbable* was written, but should be easy to customise for other
 clubs, or simply ignored if the club does not use a Microsoft Access database.
 
 """
-from __future__ import unicode_literals
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import mail_admins
@@ -102,9 +101,6 @@ class Member(models.Model):
     def __str__(self):
         return self.get_full_name()
 
-    def __unicode__(self):
-        return self.get_full_name()
-
     def get_full_name(self):
         if settings.MEMBER_TITLE:
             return ' '.join((
@@ -179,9 +175,6 @@ class Guest(models.Model):
     def __str__(self):
         return ' '.join((self.title, self.first_name, self.last_name))
 
-    def __unicode__(self):
-        return ' '.join((self.title, self.first_name, self.last_name))
-
 
 class Meeting(models.Model):
     """
@@ -208,9 +201,6 @@ class Meeting(models.Model):
         # are available, for the sake of completeness
         return '{} ({})'.format(self.name, self.date.strftime('%B %Y'))
 
-    def __unicode__(self):
-        return '{} ({})'.format(self.name, self.date.strftime('%B %Y'))
-
 
 class Profile(models.Model):
     """
@@ -226,11 +216,6 @@ class Profile(models.Model):
     )
 
     def __str__(self):
-        if self.member:
-            return '%s (%s)' % (self.user, self.member)
-        return '%s' % self.user
-
-    def __unicode__(self):
         if self.member:
             return '%s (%s)' % (self.user, self.member)
         return '%s' % self.user

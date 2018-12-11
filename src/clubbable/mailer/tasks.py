@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Celery tasks.
 
@@ -6,7 +5,6 @@ Start the Celery worker with ::
     $ celery -A clubbable worker -l info
 
 """
-from __future__ import unicode_literals, absolute_import
 from email.mime.application import MIMEApplication
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText

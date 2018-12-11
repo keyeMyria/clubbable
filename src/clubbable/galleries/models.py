@@ -1,6 +1,4 @@
 from itertools import chain
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
 from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill, ResizeToFit
@@ -16,9 +14,6 @@ class Gallery(models.Model):
     )
 
     def __str__(self):
-        return '%s' % self.name
-
-    def __unicode__(self):
         return '%s' % self.name
 
 
@@ -47,9 +42,6 @@ class Image(models.Model):
                                options={'quality': 60})
 
     def __str__(self):
-        return self.name
-
-    def __unicode__(self):
         return self.name
 
     @property

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from functools import wraps
 from django.http import HttpResponseRedirect
 from dropboxer.models import DropboxUser

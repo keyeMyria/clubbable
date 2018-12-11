@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-from __future__ import unicode_literals
 from django.core.management import BaseCommand
 from import_legacy.import_legacy import import_legacy
 
