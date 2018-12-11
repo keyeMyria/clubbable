@@ -17,7 +17,7 @@ class Document(models.Model):
     """
     A Notice is usually a PDF document that is sent to members.
     """
-    folder = models.ForeignKey(Folder)
+    folder = models.ForeignKey(Folder, models.PROTECT)
     description = models.CharField(max_length=255, blank=True)
     file = models.FileField(upload_to='doc/%Y/%m/')
 

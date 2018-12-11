@@ -2,7 +2,6 @@
 """
 These models help to migrate the legacy club database schema to the current
 """
-# TODO: Look at using Django's migration tools
 from __future__ import unicode_literals
 import re
 from django.db import models
@@ -76,12 +75,15 @@ class Member(models.Model):
                                 choices=LOCATION_CHOICES)
     honorary_life_member = models.BooleanField(default=False)
     past_president = models.BooleanField(default=False)
-    office = models.ForeignKey(Office, db_column='office')
+    office = models.ForeignKey(
+        Office, models.SET_NULL, null=True, db_column='office',
+    )
     email = models.CharField(max_length=255)
     phone = models.CharField(max_length=32, null=True)
     street_address = models.TextField(null=True)
-    membership_category = models.CharField(max_length=16,
-                                           choices=MEMBERSHIP_CATEGORY_CHOICES)
+    membership_category = models.CharField(
+        max_length=16, choices=MEMBERSHIP_CATEGORY_CHOICES,
+    )
     notes = models.TextField(null=True)
     updated = models.IntegerField()
     is_active = models.BooleanField(default=True)
@@ -99,10 +101,14 @@ class Member(models.Model):
 class Cartoon(models.Model):
     date = models.DateField()
     title = models.CharField(max_length=255)
-    member = models.ForeignKey(Member, db_column='memberID')
+    member = models.ForeignKey(
+        Member, models.SET_NULL, null=True, db_column='memberID',
+    )
     artist_name = models.CharField(max_length=255, db_column='artist')
-    artist = models.ForeignKey(Member, db_column='artistID', 
-                               related_name='cartoons_by')
+    artist = models.ForeignKey(
+        Member, models.SET_NULL,
+        null=True, db_column='artistID', related_name='cartoons_by',
+    )
     filename = models.CharField(max_length=255)
     filetype = models.CharField(max_length=50)
     filesize = models.PositiveIntegerField()
@@ -121,10 +127,13 @@ class Photograph(models.Model):
     date = models.DateField()
     title = models.CharField(max_length=255)
     members = models.ManyToManyField(Member, db_table='photographs_members')
-    photographer_name = models.CharField(max_length=255, 
-                                         db_column='photographer')
-    photographer = models.ForeignKey(Member, db_column='photographerID', 
-                                     related_name='photographs_by')
+    photographer_name = models.CharField(
+        max_length=255, db_column='photographer'
+    )
+    photographer = models.ForeignKey(
+        Member, models.SET_NULL,
+        null=True, db_column='photographerID', related_name='photographs_by',
+    )
     filename = models.CharField(max_length=255)
     filetype = models.CharField(max_length=50)
     filesize = models.PositiveIntegerField()
@@ -151,7 +160,9 @@ class User(models.Model):
     email_as_attachment = models.BooleanField(db_column='emailAsAttachment',
                                               default=False)
     last_login = models.DateTimeField(db_column='lastLogin')
-    member = models.ForeignKey(Member, db_column='memberID')
+    member = models.ForeignKey(
+        Member, models.SET_NULL, null=True, db_column='memberID',
+    )
     
     def __str__(self):
         return '(User) %s' % self.fullname
@@ -194,8 +205,8 @@ class Notice(models.Model):
 
 
 class NoticeReadBy(models.Model):
-    notice = models.ForeignKey(Notice)
-    user = models.ForeignKey(User)
+    notice = models.ForeignKey(Notice, models.CASCADE)
+    user = models.ForeignKey(User, models.CASCADE)
     last_read_on = models.DateTimeField()
     
     class Meta: 

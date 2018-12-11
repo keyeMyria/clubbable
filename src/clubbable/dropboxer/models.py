@@ -6,7 +6,7 @@ from club.models import GetOrNoneManager
 
 
 class DropboxUser(models.Model):
-    user = models.OneToOneField(User)  # Only one account per user
+    user = models.OneToOneField(User, models.CASCADE)
     access_token = models.CharField(max_length=255, blank=True)
 
     objects = GetOrNoneManager()

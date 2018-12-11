@@ -65,8 +65,9 @@ class Member(models.Model):
     # WorkTelephone
     # MobileTelephone
     email = models.CharField(max_length=150, blank=True)  # EmailAddress
-    send_emails = models.BooleanField(default=False)
-    #                                             ReceivesNoticesElectronically
+    send_emails = models.BooleanField(  # ReceivesNoticesElectronically
+        default=False,
+    )
     # Proposer
     # Seconder
     # SpouseName
@@ -77,16 +78,20 @@ class Member(models.Model):
     qualification_literature = models.BooleanField(default=False)  # Literature
     qualification_music = models.BooleanField(default=False)  # Music
     qualification_science = models.BooleanField(default=False)  # Science
-    hon_life_member = models.BooleanField(verbose_name='Honorary life member',
-                                          default=False)  # HonLifeMember
-    canonisation_date = models.DateField(null=True, blank=True)
-    #                                                          CanonisationDate
+    hon_life_member = models.BooleanField(  # HonLifeMember
+        verbose_name='Honorary life member', default=False,
+    )
+    canonisation_date = models.DateField(  # CanonisationDate
+        null=True, blank=True,
+    )
     # Category
     # ExternalRole1
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    profile_image = models.ForeignKey('galleries.Image', null=True, blank=True)
+    profile_image = models.ForeignKey(
+        'galleries.Image', models.SET_NULL, null=True, blank=True,
+    )
 
     # Used by import_legacy to find foreign keys
     objects = GetOrNoneManager()
@@ -145,19 +150,23 @@ class Guest(models.Model):
     """
     Guest and Member instances are associated with gallery images.
     """
-    id = models.PositiveIntegerField(primary_key=True,
-                                     editable=False)  # GuestID Int8,
-    date_of_listing = models.DateField()  # DateOfListing Timestamp,
-    last_name = models.CharField(max_length=100)  # GuestLastName Char (100),
-    first_name = models.CharField(max_length=100)  # GuestFirstName Char (100),
-    initials = models.CharField(max_length=100)  # GuestInitials Char (100),
-    title = models.CharField(max_length=100)  # GuestTitle Char (100),
-    admitted_to_club = models.BooleanField(default=False)
-    #                                                    AdmittedToOwldom Bool,
-    date_admitted = models.DateField(null=True, blank=True)
-    #                                                   DateAdmitted Timestamp,
-    member = models.ForeignKey(Member, null=True, blank=True)
-    #                                                           MemberNum Int8,
+    id = models.PositiveIntegerField(    # GuestID Int8
+        primary_key=True, editable=False,
+    )
+    date_of_listing = models.DateField()  # DateOfListing Timestamp
+    last_name = models.CharField(max_length=100)  # GuestLastName Char(100)
+    first_name = models.CharField(max_length=100)  # GuestFirstName Char(100)
+    initials = models.CharField(max_length=100)  # GuestInitials Char(100)
+    title = models.CharField(max_length=100)  # GuestTitle Char(100)
+    admitted_to_club = models.BooleanField(  # AdmittedToOwldom Bool
+        default=False
+    )
+    date_admitted = models.DateField(  # DateAdmitted Timestamp
+        null=True, blank=True,
+    )
+    member = models.ForeignKey(  # MemberNum Int8
+        Member, models.SET_NULL, null=True, blank=True,
+    )
     delisted = models.BooleanField(default=False)  # Delisted Bool
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -178,17 +187,16 @@ class Meeting(models.Model):
     """
     Gallery images may be associated with an Meeting.
     """
-    id = models.PositiveIntegerField(primary_key=True,
-                                     editable=False)  # EventNum Int8,
-    year = models.PositiveIntegerField()  # Year Int8,
-    month = models.PositiveIntegerField()  # Month Int8,
-    date = models.DateField()  # EventDate Timestamp,
-    name = models.CharField(max_length=100, blank=True)  # Name Char (100),
-    status = models.CharField(max_length=100, blank=True)  # Status Char (100),
-    number_of_tables = models.PositiveSmallIntegerField()
-    #                                                       NumberOfTables Int4
-    comment = models.CharField(max_length=100, blank=True)
-    #                                                        Comment Char (100)
+    id = models.PositiveIntegerField(  # EventNum Int8
+        primary_key=True, editable=False,
+    )
+    year = models.PositiveIntegerField()  # Year Int8
+    month = models.PositiveIntegerField()  # Month Int8
+    date = models.DateField()  # EventDate Timestamp
+    name = models.CharField(max_length=100, blank=True)  # Name Char(100)
+    status = models.CharField(max_length=100, blank=True)  # Status Char(100)
+    number_of_tables = models.PositiveSmallIntegerField()  # NumberOfTables
+    comment = models.CharField(max_length=100, blank=True)  # Comment Char(100)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -209,11 +217,13 @@ class Profile(models.Model):
     Profile table links users with Members. Users need not be Members, and
     Members need not have an associated User.
     """
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, models.CASCADE)
     # Members can only be associated with one user. To allow the mailer to
     # send to other organisations and non-members, Users do not need to be
     # Members.
-    member = models.OneToOneField(Member, null=True, blank=True)
+    member = models.OneToOneField(
+        Member, models.SET_NULL, null=True, blank=True
+    )
 
     def __str__(self):
         if self.member:

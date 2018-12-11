@@ -68,7 +68,7 @@ class Migration(migrations.Migration):
                 ('canonisation_date', models.DateField(blank=True, null=True)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('profile_image', models.ForeignKey(blank=True, to='galleries.Image', null=True)),
+                ('profile_image', models.ForeignKey('galleries.Image', models.SET_NULL, null=True, blank=True)),
             ],
             options={
                 'ordering': ('last_name', 'familiar_name'),
@@ -78,13 +78,13 @@ class Migration(migrations.Migration):
             name='Profile',
             fields=[
                 ('id', models.AutoField(serialize=False, verbose_name='ID', primary_key=True, auto_created=True)),
-                ('member', models.OneToOneField(blank=True, to='club.Member', null=True)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('member', models.OneToOneField('club.Member', models.SET_NULL, null=True, blank=True)),
+                ('user', models.OneToOneField(settings.AUTH_USER_MODEL, models.CASCADE)),
             ],
         ),
         migrations.AddField(
             model_name='guest',
             name='member',
-            field=models.ForeignKey(blank=True, to='club.Member', null=True),
+            field=models.ForeignKey('club.Member', models.SET_NULL, null=True, blank=True),
         ),
     ]
