@@ -3,14 +3,13 @@ Import members, guests and meetings from a Microsoft Access database.
 
 Check table names, and columns to customise for your database.
 """
-
 import csv
 from datetime import datetime
 import re
 from subprocess import Popen, PIPE
 from celery import shared_task
-from django.conf import settings
 from club.models import Member, Meeting, Guest
+from import_mdb.const import MDB_EXPORT_CMD
 
 
 def transform_date(mdb_date):
@@ -58,7 +57,7 @@ class MdbImporter(object):
         """
         start = datetime.now()
 
-        args = (settings.MDB_EXPORT_CMD, self.mdb_file, table)
+        args = (MDB_EXPORT_CMD, self.mdb_file, table)
         p = Popen(args, stdout=PIPE)
         reader = csv.DictReader(p.stdout)
 

@@ -2,25 +2,53 @@
 Django settings for clubbable project.
 
 For more information on this file, see
-https://docs.djangoproject.com/en/1.6/topics/settings/
+https://docs.djangoproject.com/en/dev/topics/settings/
 
 For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.6/ref/settings/
+https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# ==============================
+# Settings specific to clubbable
+# ==============================
+
+CLUB_NAME = "The Pirate's Cove"
+
+# Title by which to refer to members. None if not applicable
+MEMBER_TITLE = 'Captain'
+
+# Details for fetching files from Dropbox
+DROPBOX_APP_KEY = 'app_key'
+DROPBOX_APP_SECRET = 'app_secret'
+
+# Mailgun settings
+MAILGUN_DOMAIN = 'mg.example.com'
+CLUB_DOMAIN = 'example.com'  # Used for mailing lists
+MAILGUN_API_KEY = 'key-123456'
+
+# Mail settings for outgoing mail
+SMTP_SERVER = 'localhost'
+SMTP_PORT = 0  # 0 = Default
+FROM_ADDRESS = 'The Club Webmaster <webmaster@example.com>'
+REPLY_TO_ADDRESS = 'The Club Secretary <secretary@example.com>'  # Optional
+BOUNCE_ADDRESS = '<bounce@example.com>'  # Optional
+
+# ===============
+# Django settings
+# ===============
 
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
+# See https://docs.djangoproject.com/en/dev/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '+o6khsst!&j2pp3!d#&=2s7!$ra4g$xjipwfw%vpqc_eqt2jwo'
+SECRET_KEY = 'change_me'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -63,22 +91,19 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
         'OPTIONS': {
+            'debug': True,
             'context_processors': (
-                'django.contrib.auth.context_processors.auth',
                 'django.template.context_processors.debug',
-                'django.template.context_processors.i18n',
-                'django.template.context_processors.media',
-                'django.template.context_processors.static',
-                'django.template.context_processors.tz',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ),
-        },
+        }
     }
 ]
 
-
 # Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
+# https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
 DATABASES = {
     'default': {
@@ -98,7 +123,7 @@ DATABASES = {
 DATABASE_ROUTERS = ['import_legacy.router.LegacyDbRouter']
 
 # Internationalization
-# https://docs.djangoproject.com/en/1.6/topics/i18n/
+# https://docs.djangoproject.com/en/dev/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
@@ -114,53 +139,9 @@ USE_TZ = True
 MEDIA_ROOT = '/var/www/example.com/media/'
 
 # URL that handles the media served from MEDIA_ROOT
-MEDIA_URL = 'http://media.example.com/'
+MEDIA_URL = 'https://media.example.com/'
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.6/howto/static-files/
-STATIC_URL = '/static/'
-
-# ===========================
-# clubbable-specific settings
-# ===========================
-
-CLUB_NAME = "The Pirate's Cove"
-
-# Title by which to refer to members. None if not applicable
-MEMBER_TITLE = 'Captain'
-
-# Apps that add tiles to the dashboard
-DASHBOARD_APPS = (
-    'galleries',
-    'docs',
-    'dropboxer',
-    # "My profile" or "Profiles" or something.
-)
-
-# The absolute path to the mdb-export command
-MDB_EXPORT_CMD = '/usr/bin/mdb-export'
-
-# Path to static files from legacy site
-LEGACY_FILES_PATH = '~/src/owlclub/lib/var'
-
-# Details for fetching files from Dropbox
-DROPBOX_APP_KEY = 'app_key'
-DROPBOX_APP_SECRET = 'app_secret'
-
-# Mailgun settings
-MAILGUN_DOMAIN = 'mg.example.com'
-CLUB_DOMAIN = 'example.com'  # Used for mailing lists
-MAILGUN_API_KEY = 'key-123456'
-
-# Mail settings for outgoing mail
-SMTP_SERVER = 'localhost'
-SMTP_PORT = 0  # 0 = Default
-FROM_ADDRESS = 'The Club Webmaster <webmaster@example.com>'
-REPLY_TO_ADDRESS = 'The Club Secretary <secretary@example.com>'  # Optional
-BOUNCE_ADDRESS = '<bounce@example.com>'  # Optional
-
-# Import settings for local deployment, if applicable
-try:
-    from clubbable.settings_local import *
-except ImportError:
-    pass
+# https://docs.djangoproject.com/en/dev/howto/static-files/
+STATIC_ROOT = '/var/www/example.com/static/'
+STATIC_URL = 'https://static.example.com/'

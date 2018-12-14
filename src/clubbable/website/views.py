@@ -13,9 +13,14 @@ def dashboard(request):
         Return tiles from all dashboard apps
         """
         tiles_ = []
-        for app in settings.DASHBOARD_APPS:
-            module = __import__(app + '.dashboard')
-            tiles_.extend(module.dashboard.get_tiles(request))
+        for app in settings.INSTALLED_APPS:
+            try:
+                module = __import__(app + '.dashboard')
+                tiles_.extend(module.dashboard.get_tiles(request))
+            except (ImportError, AttributeError):
+                # If the app doesn't have dashboard.get_tiles(), just
+                # move along.
+                continue
         return tiles_
 
     def get_3_per_row(items):

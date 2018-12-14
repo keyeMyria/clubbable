@@ -1,5 +1,6 @@
 *.py[cod]
-settings_local.py
+settings_development.py
+settings_production.py
 src/clubbable/db.sqlite3
 
 # Generated documentation

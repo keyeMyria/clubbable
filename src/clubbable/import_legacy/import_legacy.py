@@ -6,7 +6,6 @@ been imported using import_mdb.
 from datetime import date
 import os
 import re
-from django.conf import settings
 from django.contrib.auth.models import User as DjangoUser
 from django.core.files import File
 from django.core.files.images import ImageFile
@@ -213,14 +212,13 @@ def import_legacy(incl_files=True, files_path=None):
     Connection details are configured in settings.DATABASES['legacy']
 
     :param incl_files: Whether to include documents and images
-    :param files_path: Path to files. Overrides settings.LEGACY_FILES_PATH.
+    :param files_path: Path to files.
     """
     # First migrate users, before things that link to them
     import_members()
     import_users()
 
     if incl_files:
-        files_path = files_path or settings.LEGACY_FILES_PATH
         import_cartoons(files_path)
         import_photographs(files_path)
         import_notices(files_path)
